@@ -289,6 +289,7 @@ class ExchangeCoordinatorSuite extends SparkFunSuite with BeforeAndAfterAll {
         val df =
           spark
             .range(0, 1000, 1, numInputPartitions)
+          .repartition(100, col("id"))
             .selectExpr("id % 20 as key", "id as value")
         val agg = df.groupBy("key").count()
 
